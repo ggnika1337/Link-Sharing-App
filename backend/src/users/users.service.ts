@@ -4,6 +4,12 @@ import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
+  getUserById(userId: string) {
+    throw new Error('Method not implemented.');
+  }
+  findByEmail(email: SignInDto, arg1: boolean) {
+    throw new Error('Method not implemented.');
+  }
   create(createUserDto: CreateUserDto) {
     return 'This action adds a new user';
   }

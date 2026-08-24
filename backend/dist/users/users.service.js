@@ -9,6 +9,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsersService = void 0;
 const common_1 = require("@nestjs/common");
 let UsersService = class UsersService {
+    getUserById(userId) {
+        throw new Error('Method not implemented.');
+    }
+    findByEmail(email, arg1) {
+        throw new Error('Method not implemented.');
+    }
     create(createUserDto) {
         return 'This action adds a new user';
     }
