@@ -1,14 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { SignInDto } from 'src/auth/dto/sign-in.dto';
 
 @Injectable()
 export class UsersService {
   getUserById(userId: string) {
     throw new Error('Method not implemented.');
   }
-  findByEmail(email: SignInDto, arg1: boolean) {
-    throw new Error('Method not implemented.');
+  findByEmail(email: string) {
+    return '123';
   }
   create(createUserDto: CreateUserDto) {
     return 'This action adds a new user';

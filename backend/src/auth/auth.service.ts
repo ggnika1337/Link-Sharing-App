@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { SignUpDto } from './dtos/sign-up.dto';
+import { SignUpDto } from './dto/sign-up.dto';
 import * as bcrypt from 'bcrypt';
-import { SignInDto } from './dtos/sign-in.dto';
+import { SignInDto } from './dto/sign-in.dto';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
 
@@ -13,7 +13,7 @@ export class AuthService {
   ) {}
 
   async signUp({ email, fullName, password }: SignUpDto) {
-    const existUser = await this.usersService.findByEmail(email);
+    const existUser = this.usersService.findByEmail(email);
 
     if (existUser) {
       throw new BadRequestException('User already exists');
@@ -35,7 +35,7 @@ export class AuthService {
   }
 
   async signIn({ password, email }: SignInDto) {
-    const existUser = this.usersService.findByEmail(email, true);
+    const existUser = this.usersService.findByEmail(email);
 
     if (!existUser) {
       throw new BadRequestException('Email or password is invalid');

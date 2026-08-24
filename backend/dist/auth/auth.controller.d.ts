@@ -1,7 +1,6 @@
 import { AuthService } from './auth.service';
 import { SignUpDto } from './dto/sign-up.dto';
 import { SignInDto } from './dto/sign-in.dto';
-import { Request } from 'express';
 export declare class AuthController {
     private readonly authService;
     constructor(authService: AuthService);
@@ -10,7 +9,7 @@ export declare class AuthController {
         message: string;
     }>;
     signIn({ email, password }: SignInDto): Promise<{
-        token: any;
+        token: string;
     }>;
-    getCurrentUser(req: Request): Promise<void>;
+    getCurrentUser(req: any): Promise<void>;
 }

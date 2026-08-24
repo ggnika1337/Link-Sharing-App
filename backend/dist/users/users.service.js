@@ -12,8 +12,8 @@ let UsersService = class UsersService {
     getUserById(userId) {
         throw new Error('Method not implemented.');
     }
-    findByEmail(email, arg1) {
-        throw new Error('Method not implemented.');
+    findByEmail(email) {
+        return '123';
     }
     create(createUserDto) {
         return 'This action adds a new user';

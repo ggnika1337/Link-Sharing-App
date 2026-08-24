@@ -2,7 +2,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 export declare class UsersService {
     getUserById(userId: string): void;
-    findByEmail(email: SignInDto, arg1: boolean): void;
+    findByEmail(email: string): string;
     create(createUserDto: CreateUserDto): string;
     findAll(): string;
     findOne(id: number): string;

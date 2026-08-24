@@ -41,7 +41,6 @@ var __importStar = (this && this.__importStar) || (function () {
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthService = void 0;
 const common_1 = require("@nestjs/common");
@@ -56,7 +55,7 @@ let AuthService = class AuthService {
         this.jwtService = jwtService;
     }
     async signUp({ email, fullName, password }) {
-        const existUser = await this.usersService.findByEmail(email);
+        const existUser = this.usersService.findByEmail(email);
         if (existUser) {
             throw new common_1.BadRequestException('User already exists');
         }
@@ -73,7 +72,7 @@ let AuthService = class AuthService {
         };
     }
     async signIn({ password, email }) {
-        const existUser = this.usersService.findByEmail(email, true);
+        const existUser = this.usersService.findByEmail(email);
         if (!existUser) {
             throw new common_1.BadRequestException('Email or password is invalid');
         }
@@ -94,6 +93,7 @@ let AuthService = class AuthService {
 exports.AuthService = AuthService;
 exports.AuthService = AuthService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [users_service_1.UsersService, typeof (_a = typeof jwt_1.JwtService !== "undefined" && jwt_1.JwtService) === "function" ? _a : Object])
+    __metadata("design:paramtypes", [users_service_1.UsersService,
+        jwt_1.JwtService])
 ], AuthService);
 //# sourceMappingURL=auth.service.js.map

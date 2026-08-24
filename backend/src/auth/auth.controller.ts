@@ -4,7 +4,6 @@ import { SignUpDto } from './dto/sign-up.dto';
 import { SignInDto } from './dto/sign-in.dto';
 import { IsAuthGuard } from 'src/guards/isAuth.guard';
 import { Throttle, ThrottlerGuard } from '@nestjs/throttler';
-import { Request } from 'express';
 @UseGuards(ThrottlerGuard)
 @Controller('auth')
 export class AuthController {
@@ -24,7 +23,7 @@ export class AuthController {
 
   @Get('current-user')
   @UseGuards(IsAuthGuard)
-  getCurrentUser(@Req() req: Request) {
+  getCurrentUser(@Req() req: any) {
     return this.authService.getCurrentUser(req.userId);
   }
 }

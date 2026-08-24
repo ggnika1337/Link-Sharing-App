@@ -1,5 +1,5 @@
-import { SignUpDto } from './dtos/sign-up.dto';
-import { SignInDto } from './dtos/sign-in.dto';
+import { SignUpDto } from './dto/sign-up.dto';
+import { SignInDto } from './dto/sign-in.dto';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
 export declare class AuthService {
@@ -11,7 +11,7 @@ export declare class AuthService {
         message: string;
     }>;
     signIn({ password, email }: SignInDto): Promise<{
-        token: any;
+        token: string;
     }>;
     getCurrentUser(userId: string): Promise<void>;
 }
