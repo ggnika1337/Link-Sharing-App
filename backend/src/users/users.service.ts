@@ -1,33 +1,53 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { SignInDto } from 'src/auth/dto/sign-in.dto';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { User } from './schemas/user.schema';
+import * as bcrypt from "bcrypt"
 
 @Injectable()
 export class UsersService {
-  getUserById(userId: string) {
-    throw new Error('Method not implemented.');
-  }
-  findByEmail(email: string) {
-    return '123';
-  }
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+  constructor(
+    @InjectModel("user") private userModel: Model<User>
+  ){}
+
+  async findOne(id: string) {
+    const desiredUser = await this.userModel.findById(id)
+    if(!desiredUser){
+      throw new NotFoundException("User not found")
+    }
+    return desiredUser
   }
 
-  findAll() {
-    return `This action returns all users`;
+  async remove(id: string) {
+    const deletedUser = await this.userModel.findByIdAndDelete(id)
+    if(!deletedUser){
+      throw new NotFoundException("User not found")
+    }
+    return deletedUser
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
-  }
+  async update(id: string, updateUserDto: UpdateUserDto) {
+    if (updateUserDto.email){
+      const existingEmail = await this.userModel.findOne({email: updateUserDto.email})
+      if(existingEmail){
+        throw new BadRequestException("This email is already used")
+      }
+    }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+    if(updateUserDto.password){
+      updateUserDto.password = await bcrypt.hash(updateUserDto.password, 10)
+    }
+    
+    const updatedUser = await this.userModel.findByIdAndUpdate(id, {
+      ...updateUserDto,
+      $inc: { __v: 1 }
+    },
+    {new: true})
+    if(!updatedUser){
+      throw new NotFoundException("User not found")
+    }
+    return updatedUser
   }
 }
