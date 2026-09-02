@@ -10,6 +10,14 @@ import { UserId } from './decorators/user.decorator';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  @Get("me")
+  @UseGuards(IsAuthGuard)
+  getMyProfile(
+    @UserId() userId
+  ){
+    return this.usersService.findOne(userId)
+  }
+
   @Get(':id')
   findOne(
     @Param('id') {id}: IsValidMongoId

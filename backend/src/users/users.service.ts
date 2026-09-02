@@ -15,7 +15,7 @@ export class UsersService {
   ){}
 
   async findOne(id: string) {
-    const desiredUser = await this.userModel.findById(id)
+    const desiredUser = await this.userModel.findById(id).populate("links")
     if(!desiredUser){
       throw new NotFoundException("User not found")
     }
@@ -27,6 +27,7 @@ export class UsersService {
     if(!deletedUser){
       throw new NotFoundException("User not found")
     }
+    await this.linkModel.deleteMany({linkOwner: id})
     return deletedUser
   }
 
