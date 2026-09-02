@@ -25,7 +25,7 @@ export class IsAuthGuard implements CanActivate {
 
       req.userId = payload.userId;
     } catch (error) {
-      throw new UnauthorizedException('Permition denied');
+      throw new UnauthorizedException('Permission denied');
     }
     return true;
   }

@@ -11,6 +11,9 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { LoggerModule } from 'pino-nestjs';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
+import { LinksModule } from './links/links.module';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -25,6 +28,9 @@ import { JwtModule } from '@nestjs/jwt';
         }
       }
     }),
+    ThrottlerModule.forRoot([
+      {ttl: 1 * 60 * 1000, limit: 20}
+    ]),
     JwtModule.registerAsync({
       global: true,
       imports: [ConfigModule],
@@ -42,8 +48,12 @@ import { JwtModule } from '@nestjs/jwt';
     }),
     UsersModule,
     AuthModule,
+    LinksModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: 
+  [AppService,
+    {provide: APP_GUARD, useClass: ThrottlerGuard}
+  ],
 })
 export class AppModule {}
