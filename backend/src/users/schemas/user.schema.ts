@@ -13,10 +13,11 @@ export class User {
   password!: string;
 
   @Prop({
-    type: [String],
+    type: [Types.ObjectId],
     default: [],
+    ref: "link"
   })
-  links!: string[];
+  links!: Types.ObjectId[];
 
   @Prop({
     type: String,

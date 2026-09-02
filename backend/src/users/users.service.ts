@@ -5,11 +5,13 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from './schemas/user.schema';
 import * as bcrypt from "bcrypt"
+import { Link } from '../links/schemas/link.schema';
 
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectModel("user") private userModel: Model<User>
+    @InjectModel("user") private userModel: Model<User>,
+    @InjectModel("link") private linkModel: Model<Link>
   ){}
 
   async findOne(id: string) {
