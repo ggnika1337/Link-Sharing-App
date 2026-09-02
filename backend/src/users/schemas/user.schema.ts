@@ -6,17 +6,25 @@ export class User {
   @Prop({ type: String, required: true })
   fullName!: string;
 
-  @Prop({ type: String, unique: true })
+  @Prop({ type: String, required: true, unique: true, trim: true, lowercase: true })
   email!: string;
 
-  @Prop({ type: String })
-  password: string;
+  @Prop({ type: String, required: true, select: false})
+  password!: string;
 
   @Prop({
-    type: [String],
+    type: [Types.ObjectId],
     default: [],
+    ref: "link"
   })
-  links!: string[];
+  links!: Types.ObjectId[];
+
+  @Prop({
+    type: String,
+    required: false,
+    default: ""
+  })
+  avatar!: string
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
