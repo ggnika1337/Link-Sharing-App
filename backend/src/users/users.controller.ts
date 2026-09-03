@@ -6,6 +6,7 @@ import { IsValidMongoId } from '../shared/is-valid-mongo-id.dto';
 import { IsAuthGuard } from '../guards/isAuth.guard';
 import { UserId } from './decorators/user.decorator';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { Throttle } from '@nestjs/throttler';
 
 @Controller('users')
 export class UsersController {
@@ -22,6 +23,7 @@ export class UsersController {
   }
 
   @Patch("avatar")
+  @Throttle({default: {ttl: 60 * 1000, limit: 5, blockDuration: 30 * 1000}})
   @UseGuards(IsAuthGuard)
   @UseInterceptors(FileInterceptor("file"))
   uploadAvatar(
@@ -49,15 +51,16 @@ export class UsersController {
 
   @Get(':id')
   findOne(
-    @Param('id') {id}: IsValidMongoId
+    @Param() {id}: IsValidMongoId
   ) {
     return this.usersService.findOne(id);
   }
 
   @Patch(':id')
+  @Throttle({default: {ttl: 60 * 1000, limit: 5, blockDuration: 30 * 1000}})
   @UseGuards(IsAuthGuard)
   update(
-    @Param('id') {id}: IsValidMongoId, 
+    @Param() {id}: IsValidMongoId, 
     @Body() updateUserDto: UpdateUserDto,
     @UserId() userId
   ) {
@@ -71,7 +74,7 @@ export class UsersController {
   @Delete(':id')
   @UseGuards(IsAuthGuard)
   remove(
-    @Param('id') {id}: IsValidMongoId,
+    @Param() {id}: IsValidMongoId,
     @UserId() userId
   ) {
     if(id !== userId?.toString()){

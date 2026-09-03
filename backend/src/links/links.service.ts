@@ -62,7 +62,7 @@ export class LinksService {
 
     const deletedLink = await this.linkModel.findByIdAndDelete(id)
     await this.userModel.findByIdAndUpdate(userId, {
-      $pull: {links: id}
+      $pull: {links: targettedLink._id}
     })
 
     return deletedLink
