@@ -14,6 +14,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { LinksModule } from './links/links.module';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
+import { CloudinaryService } from './shared/cloudinary.service';
 
 @Module({
   imports: [
@@ -53,7 +54,8 @@ import { APP_GUARD } from '@nestjs/core';
   controllers: [AppController],
   providers: 
   [AppService,
-    {provide: APP_GUARD, useClass: ThrottlerGuard}
+    {provide: APP_GUARD, useClass: ThrottlerGuard},
+    CloudinaryService
   ],
 })
 export class AppModule {}

@@ -4,6 +4,7 @@ import { UsersController } from './users.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserSchema } from './schemas/user.schema';
 import { LinksModule } from '../links/links.module';
+import { CloudinaryService } from '../shared/cloudinary.service';
 
 @Module({
   imports: [
@@ -13,7 +14,7 @@ import { LinksModule } from '../links/links.module';
     forwardRef(() => LinksModule)
   ],
   controllers: [UsersController],
-  providers: [UsersService],
+  providers: [UsersService, CloudinaryService],
   exports: [UsersService, MongooseModule]
 })
 export class UsersModule {}
