@@ -1,4 +1,15 @@
-import { IsArray, IsEmail, IsNotEmpty, IsObject, IsString } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsArray, IsEmail, IsNotEmpty, IsObject, IsOptional, IsString, ValidateNested } from 'class-validator';
+
+export class AvatarClass{
+  @IsOptional()
+  @IsString()
+  url?: string
+
+  @IsOptional()
+  @IsString()
+  publicId?: string
+}
 
 export class CreateUserDto {
   @IsNotEmpty()
@@ -18,6 +29,7 @@ export class CreateUserDto {
   links!: string[]
 
   @IsNotEmpty()
-  @IsString()
-  avatar!: string;
+  @ValidateNested()
+  @Type(() => AvatarClass)
+  avatar!: AvatarClass;
 }

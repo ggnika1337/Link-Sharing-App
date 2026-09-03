@@ -20,11 +20,17 @@ export class User {
   links!: Types.ObjectId[];
 
   @Prop({
-    type: String,
+    type: {
+      url: {type: String, default: ""},
+      publicId: {type: String, default: ""}
+    },
+    default: {url: "", publicId: ""},
     required: false,
-    default: ""
   })
-  avatar!: string
+  avatar!: {
+    url: string,
+    publicId: string
+  }
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
