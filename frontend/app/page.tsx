@@ -1,5 +1,5 @@
-import Image from "next/image";
+import DevLinksApp from "./devlinks-app";
 
 export default function Home() {
-  return;
+  return <DevLinksApp />;
 }
