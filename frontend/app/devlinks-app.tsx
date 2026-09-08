@@ -3,7 +3,9 @@
 
 import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from "react";
 
-const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+const API =
+  process.env.NEXT_PUBLIC_API_URL ||
+  "https://link-sharing-app-backend-zzvf.onrender.com";
 const platforms = [
   "GitHub",
   "YouTube",
